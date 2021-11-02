@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -13,7 +15,7 @@ public class Saque {
 	
 	@Id
 	private UUID id;
-	@NotNull
+	@NotNull @NotEmpty @NotBlank
 	private Integer valor;
 	private LocalDateTime data;
 	
