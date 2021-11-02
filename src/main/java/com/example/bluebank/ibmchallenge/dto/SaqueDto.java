@@ -8,10 +8,10 @@ import com.example.bluebank.ibmchallenge.entities.Nota;
 
 public class SaqueDto {
 	public UUID id;
-	public Double valor;
+	public Integer valor;
 	public List<Nota> notas = new ArrayList<Nota>();
 	
-	public SaqueDto (UUID id, Double valor, List<Nota> notas) {
+	public SaqueDto (UUID id, Integer valor, List<Nota> notas) {
 		this.id = id;
 		this.valor = valor;
 		this.notas = notas;

@@ -34,10 +34,15 @@ public class SaqueController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<SaqueDto> add(@RequestBody Saque saque, UriComponentsBuilder uriBuilder) {
-		var retorno = service.add(saque);
-		URI uri = uriBuilder.path("/cars/{id}").buildAndExpand(retorno.id).toUri();
-		return ResponseEntity.created(uri).body(retorno);    
+	public ResponseEntity<SaqueDto> add(@RequestBody @Valid Saque saque, UriComponentsBuilder uriBuilder) {
+		if(saque.getValor()%5!=0) {
+			return ResponseEntity.badRequest().build();
+		}else {			
+			var retorno = service.add(saque);
+			URI uri = uriBuilder.path("/cars/{id}").buildAndExpand(retorno.id).toUri();
+			return ResponseEntity.created(uri).body(retorno);  
+			
+		}  
 	}
 	
 }

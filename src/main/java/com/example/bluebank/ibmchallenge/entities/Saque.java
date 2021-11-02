@@ -6,19 +6,21 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Saque {
 	
 	@Id
 	private UUID id;
-	private Double valor;
+	@NotNull
+	private Integer valor;
 	private LocalDateTime data;
 	
-	public Double getValor() {
+	public Integer getValor() {
 		return valor;
 	}
-	public void setValor(Double valor) {
+	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
 	public LocalDateTime getData() {
@@ -33,11 +35,9 @@ public class Saque {
 	
 	public Saque () {
 		this.id = UUID.randomUUID();
-		this.data = LocalDateTime.now();
-		this.valor = 200d;
 	}
 	
-	public Saque (Double valor) {
+	public Saque (Integer valor) {
 		this.id = UUID.randomUUID();
 		this.data = LocalDateTime.now();
 		this.valor = valor;

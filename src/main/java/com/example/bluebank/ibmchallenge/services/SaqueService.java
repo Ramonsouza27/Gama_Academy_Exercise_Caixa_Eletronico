@@ -22,8 +22,30 @@ public class SaqueService {
 	private SaqueRepository repository;
 	
 	public SaqueDto add(Saque saque) {
+		
+		List<Nota> notas = ContagemNotas(saque);
+		
+		notas.forEach(nota->System.out.println(nota.qtd+" de "+nota.valor));
+		
+		repository.save(saque);
+		return SaqueFactory.Create(saque, notas);
+	}
+	
+	public Page<Saque> findAll(Pageable pageable){ 
+		
+		int size = pageable.getPageSize();
+	
+		if(pageable.getPageSize() > 10) size = 10;
+		else if(pageable.getPageSize() < 0) size = 0;
+		
+		Pageable _p = PageRequest.of(pageable.getPageNumber(), size,pageable.getSort());
+		
+		return repository.findAll(_p);
+	}
+	
+	public List<Nota> ContagemNotas (Saque saque){
 		List<Nota> notas = new ArrayList<Nota>();
-		Double valor = saque.getValor();
+		Integer valor = saque.getValor();
 		int nota100 =0;
 		int nota50 =0;
 		int nota20 =0;
@@ -60,21 +82,6 @@ public class SaqueService {
 		}	
 		if(nota5>0)notas.add(new Nota(5d,nota5));
 		
-		notas.forEach(nota->System.out.println(nota.qtd+" de "+nota.valor));
-		
-		repository.save(saque);
-		return SaqueFactory.Create(saque, notas);
-	}
-	
-	public Page<Saque> findAll(Pageable pageable){ 
-		
-		int size = pageable.getPageSize();
-	
-		if(pageable.getPageSize() > 10) size = 10;
-		else if(pageable.getPageSize() < 0) size = 0;
-		
-		Pageable _p = PageRequest.of(pageable.getPageNumber(), size,pageable.getSort());
-		
-		return repository.findAll(_p);
+		return notas;
 	}
 }
