@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.example.bluebank.ibmchallenge.dto.SaqueDto;
 import com.example.bluebank.ibmchallenge.entities.Saque;
 import com.example.bluebank.ibmchallenge.services.SaqueService;
 
@@ -33,9 +34,9 @@ public class SaqueController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Saque> add(@RequestBody Saque saque, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<SaqueDto> add(@RequestBody Saque saque, UriComponentsBuilder uriBuilder) {
 		var retorno = service.add(saque);
-		URI uri = uriBuilder.path("/cars/{id}").buildAndExpand(retorno.getId()).toUri();
+		URI uri = uriBuilder.path("/cars/{id}").buildAndExpand(retorno.id).toUri();
 		return ResponseEntity.created(uri).body(retorno);    
 	}
 	

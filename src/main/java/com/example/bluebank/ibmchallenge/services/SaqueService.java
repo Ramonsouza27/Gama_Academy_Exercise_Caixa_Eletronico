@@ -9,8 +9,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.example.bluebank.ibmchallenge.dto.SaqueDto;
 import com.example.bluebank.ibmchallenge.entities.Nota;
 import com.example.bluebank.ibmchallenge.entities.Saque;
+import com.example.bluebank.ibmchallenge.factories.SaqueFactory;
 import com.example.bluebank.ibmchallenge.repositories.SaqueRepository;
 
 @Service
@@ -19,7 +21,7 @@ public class SaqueService {
 	@Autowired
 	private SaqueRepository repository;
 	
-	public Saque add(Saque saque) {
+	public SaqueDto add(Saque saque) {
 		List<Nota> notas = new ArrayList<Nota>();
 		Double valor = saque.getValor();
 		int nota100 =0;
@@ -60,8 +62,8 @@ public class SaqueService {
 		
 		notas.forEach(nota->System.out.println(nota.qtd+" de "+nota.valor));
 		
-		repository.save(saque);	
-		return saque;
+		repository.save(saque);
+		return SaqueFactory.Create(saque, notas);
 	}
 	
 	public Page<Saque> findAll(Pageable pageable){ 
